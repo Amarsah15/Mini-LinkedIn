@@ -2,7 +2,6 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import e from "express";
 
 dotenv.config();
 
@@ -15,6 +14,7 @@ export const register = async (req, res) => {
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
+
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
