@@ -36,7 +36,7 @@ app.listen(PORT, () => {
 const keepAlive = () => {
   setInterval(async () => {
     try {
-      const res = await axios.get("http:localhost:8000/health", {
+      const res = await axios.get("http://localhost:8000/health"  , {
         timeout: 4000,
       });
       console.log("✅ Ping successful:", res.status);

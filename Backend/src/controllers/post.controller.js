@@ -29,18 +29,16 @@ export const createPost = async (req, res) => {
 export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find()
-      .populate("author", "name", "timestamp")
+      .populate("author", "name")
       .sort({ createdAt: -1 });
 
     res.status(200).json({ success: true, message: "AllPosts fetched", posts });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to fetch posts",
-        error: err.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch posts",
+      error: err.message,
+    });
   }
 };
 
@@ -49,20 +47,16 @@ export const getPostsByUser = async (req, res) => {
     const userId = req.user.id; // ✅ fix: use id instead of destructuring userId
     const posts = await Post.find({ author: userId }).sort({ createdAt: -1 });
 
-    res
-      .status(200)
-      .json({
-        posts,
-        success: true,
-        message: `${req.user.name} posts fetched successfully`,
-      });
+    res.status(200).json({
+      posts,
+      success: true,
+      message: `${req.user.name} posts fetched successfully`,
+    });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to fetch user's posts",
-        error: err.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch user's posts",
+      error: err.message,
+    });
   }
 };
