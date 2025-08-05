@@ -1,16 +1,22 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import axios from "axios";
 import cookieParser from "cookie-parser";
 import authRoutes from "./src/routes/auth.routes.js";
 import postRoutes from "./src/routes/posts.routes.js";
 import profileRoutes from "./src/routes/profile.routes.js";
 import { connectDB } from "./src/config/db.js";
-import axios from "axios";
+import { generalLimiter } from "./src/middleware/rateLimiter.middleware.js";
 
 const app = express();
+
 connectDB();
+
 dotenv.config();
+
+app.use(generalLimiter);
+
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
@@ -29,6 +35,13 @@ app.get("/health", (req, res) => {
   res.status(200).json({ success: true, message: "Server is healthy" });
 });
 
+app.use("*", (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found, Error 404",
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
@@ -36,7 +49,7 @@ app.listen(PORT, () => {
 const keepAlive = () => {
   setInterval(async () => {
     try {
-      const res = await axios.get("http://localhost:8000/health"  , {
+      const res = await axios.get("http://localhost:8000/health", {
         timeout: 4000,
       });
       console.log("✅ Ping successful:", res.status);
