@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import e from "express";
 
 dotenv.config();
 
@@ -143,6 +144,26 @@ export const login = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "User login failed",
+      error: error.message,
+    });
+  }
+};
+
+export const logout = (req, res) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+    });
+    res
+      .status(200)
+      .json({ success: true, message: "User logged out successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "User logout failed",
       error: error.message,
     });
   }
