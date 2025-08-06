@@ -15,6 +15,7 @@ import {
 const authRoutes = Router();
 
 authRoutes.use(authLimiter);
+
 authRoutes.post("/register", validateRegistration, register);
 authRoutes.post("/login", validateLogin, login);
 authRoutes.post("/logout", auth, logout);
