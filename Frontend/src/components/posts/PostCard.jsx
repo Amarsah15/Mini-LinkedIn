@@ -49,8 +49,6 @@ const PostCard = ({ post, onPostDeleted }) => {
     }
   };
 
-  console.log("PostCard rendered for post:", post);
-
   return (
     <div className="card p-6 mb-4">
       <div className="flex items-start justify-between">
