@@ -5,7 +5,9 @@ export const getUserProfile = async (req, res) => {
   try {
     const userId = req.user.id; // ✅ FIXED
     const profile = await User.findById(userId).select("-password");
-    const posts = await Post.find({ author: userId }).sort({ createdAt: -1 });
+    const posts = await Post.find({ author: userId })
+      .populate("author", "name profilePicture")
+      .sort({ createdAt: -1 });
 
     if (!profile) return res.status(404).json({ message: "User not found" });
 

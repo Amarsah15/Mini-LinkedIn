@@ -2,18 +2,13 @@ import React, { useEffect } from "react";
 import { usePostsStore } from "../../store/postsStore";
 import PostCard from "./PostCard";
 import LoadingSpinner from "../common/LoadingSpinner";
-import { useProfileStore } from "../../store/profileStore";
-import { useAuthStore } from "../../store/authStore";
 
 const PostFeed = ({ refreshTrigger }) => {
-  const { authUser } = useAuthStore();
-  const { profile, getUserProfile } = useProfileStore();
   const { posts, isFetchingPosts, getAllPosts, deletePost } = usePostsStore();
 
   useEffect(() => {
     getAllPosts();
-    getUserProfile();
-  }, [refreshTrigger, getAllPosts, getUserProfile]);
+  }, [refreshTrigger, getAllPosts]);
 
   const handlePostDeleted = async (postId) => {
     try {
@@ -59,7 +54,6 @@ const PostFeed = ({ refreshTrigger }) => {
     );
   }
 
-  const displayProfile = profile || authUser;
   return (
     <div className="space-y-4">
       {posts.map((post) => (
@@ -67,7 +61,6 @@ const PostFeed = ({ refreshTrigger }) => {
           key={post._id}
           post={post}
           onPostDeleted={handlePostDeleted}
-          profile={displayProfile}
         />
       ))}
     </div>

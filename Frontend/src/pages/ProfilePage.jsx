@@ -76,7 +76,6 @@ const ProfilePage = () => {
             <PostCard
               key={post._id}
               post={post}
-              profile={displayProfile}
               onPostDeleted={removeUserPost}
             />
           ))

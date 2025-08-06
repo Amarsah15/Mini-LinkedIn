@@ -29,7 +29,7 @@ export const createPost = async (req, res) => {
 export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find()
-      .populate("author", "name")
+      .populate("author", "name profilePicture")
       .sort({ createdAt: -1 });
 
     res.status(200).json({ success: true, message: "AllPosts fetched", posts });
