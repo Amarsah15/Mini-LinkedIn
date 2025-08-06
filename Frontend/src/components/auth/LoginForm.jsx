@@ -21,11 +21,8 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     try {
       await login(data);
-      // If login is successful, navigate to home
-      // The toast success message is handled in the store
       navigate("/");
     } catch (error) {
-      // Error handling is done in the store with toast
       console.log("Login failed:", error);
     }
   };

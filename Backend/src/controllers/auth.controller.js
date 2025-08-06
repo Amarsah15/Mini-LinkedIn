@@ -52,7 +52,7 @@ export const register = async (req, res) => {
     // Set token in response header
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // true on prod
+      secure: true, // true on prod
       sameSite: "None", // or 'None' with secure true for cross-site
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -112,7 +112,7 @@ export const login = async (req, res) => {
     // Set token in response header
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // true on prod
+      secure: true, // true on prod
       sameSite: "None", // or 'None' with secure true for cross-site
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -136,9 +136,9 @@ export const logout = (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/auth/login", // Make sure path matches
+      secure: true,
+      sameSite: "None", // or 'None' with secure true for cross-site
+      path: "/", // Make sure path matches
     });
     res
       .status(200)

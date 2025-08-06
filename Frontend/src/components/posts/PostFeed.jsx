@@ -11,7 +11,8 @@ const PostFeed = ({ refreshTrigger }) => {
   const { posts, isFetchingPosts, getAllPosts, deletePost } = usePostsStore();
 
   useEffect(() => {
-    getAllPosts(), getUserProfile();
+    getAllPosts();
+    getUserProfile();
   }, [refreshTrigger, getAllPosts, getUserProfile]);
 
   const handlePostDeleted = async (postId) => {

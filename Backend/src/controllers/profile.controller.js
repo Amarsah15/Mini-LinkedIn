@@ -9,7 +9,6 @@ export const getUserProfile = async (req, res) => {
 
     if (!profile) return res.status(404).json({ message: "User not found" });
 
-    if (!posts) return res.status(404).json({ message: "Posts not found" });
     if (posts.length === 0)
       return res.status(200).json({
         success: true,

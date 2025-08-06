@@ -8,7 +8,7 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const { signup, isSigninUp } = useAuthStore();
+  const { signup, isSigningUp } = useAuthStore();
 
   const {
     register,
@@ -123,10 +123,10 @@ const RegisterForm = () => {
           <div>
             <button
               type="submit"
-              disabled={isSigninUp}
+              disabled={isSigningUp}
               className="group relative w-full flex justify-center btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSigninUp ? <LoadingSpinner size="sm" /> : "Create Account"}
+              {isSigningUp ? <LoadingSpinner size="sm" /> : "Create Account"}
             </button>
           </div>
         </form>

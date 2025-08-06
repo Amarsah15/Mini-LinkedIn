@@ -7,22 +7,17 @@ import { updateProfileSchema } from "../../schemas/profileSchemas";
 import LoadingSpinner from "../common/LoadingSpinner";
 
 const EditProfile = ({ onProfileUpdated, onCancel }) => {
-  /* ------------------------------------------------------------ */
-  /* 1.  User data already hydrated from the http-only cookie      */
-  /* ------------------------------------------------------------ */
-  const { authUser } = useAuthStore(); // basic info
+
+  const { authUser } = useAuthStore();
   const {
-    profile, // full profile (may include bio)
+    profile,
     updateProfile,
     isUpdatingProfile,
   } = useProfileStore();
 
-  /* Prefer the full profile if we have it, otherwise fall back to authUser */
+
   const initial = profile || authUser;
 
-  /* ------------------------------------------------------------ */
-  /* 2.  Form setup                                               */
-  /* ------------------------------------------------------------ */
   const {
     register,
     handleSubmit,
@@ -38,28 +33,20 @@ const EditProfile = ({ onProfileUpdated, onCancel }) => {
 
   const bio = watch("bio", "");
 
-  /* ------------------------------------------------------------ */
-  /* 3.  Submit handler                                           */
-  /* ------------------------------------------------------------ */
   const onSubmit = async (data) => {
     try {
-      const updatedUser = await updateProfile(data); // toast + state handled in store
+      const updatedUser = await updateProfile(data); 
       if (onProfileUpdated) onProfileUpdated(updatedUser);
     } catch (err) {
-      // store already showed a toast; just log for dev
       console.error("Profile update failed:", err);
     }
   };
 
-  /* ------------------------------------------------------------ */
-  /* 4.  Render                                                   */
-  /* ------------------------------------------------------------ */
   return (
     <div className="card p-6 mb-6">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">Edit Profile</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* -------------------------- Name -------------------------- */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Full Name
@@ -75,7 +62,6 @@ const EditProfile = ({ onProfileUpdated, onCancel }) => {
           )}
         </div>
 
-        {/* --------------------------- Bio -------------------------- */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Bio

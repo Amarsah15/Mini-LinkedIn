@@ -18,7 +18,6 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 import { useAuthStore } from "./store/authStore";
 import LoadingSpinner from "./components/common/LoadingSpinner";
-import Help from "./pages/Help";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -76,7 +75,6 @@ function App() {
 
         {/* Fallback */}
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="/help" element={<Help />} />
       </Routes>
     </div>
   );
