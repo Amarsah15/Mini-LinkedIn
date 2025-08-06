@@ -159,9 +159,10 @@ export const check = async (req, res) => {
       success: true,
       message: "User is authenticated",
       user: {
-        id: req.user._id,
+        id: req.user.id,
         name: req.user.name,
         email: req.user.email,
+        profilePicture: req.user.profilePicture,
       },
     });
   } catch (error) {

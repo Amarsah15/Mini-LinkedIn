@@ -44,10 +44,8 @@ const PostCard = ({ post, onPostDeleted, profile }) => {
 
   const handleNameClick = (clickedUserId) => {
     if (!authUser) return;
-    if (authUser._id === clickedUserId) {
+    if (authUser.id === clickedUserId) {
       navigate("/profile");
-    } else {
-      navigate(`/profile/${clickedUserId}`);
     }
   };
 
