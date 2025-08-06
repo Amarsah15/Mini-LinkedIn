@@ -15,7 +15,6 @@ export const register = async (req, res) => {
         .json({ success: false, message: "All fields are required" });
     }
 
-
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -53,9 +52,9 @@ export const register = async (req, res) => {
     // Set token in response header
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      secure: process.env.NODE_ENV === "production", // true on prod
+      sameSite: "Lax", // or 'None' with secure true for cross-site
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     res.status(201).json({
@@ -113,9 +112,9 @@ export const login = async (req, res) => {
     // Set token in response header
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      secure: process.env.NODE_ENV === "production", // true on prod
+      sameSite: "Lax", // or 'None' with secure true for cross-site
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     res.status(200).json({
@@ -138,7 +137,8 @@ export const logout = (req, res) => {
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/auth/login", // Make sure path matches
     });
     res
       .status(200)
@@ -150,5 +150,22 @@ export const logout = (req, res) => {
       message: "User logout failed",
       error: error.message,
     });
+  }
+};
+
+export const check = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      message: "User is authenticated",
+      user: {
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email,
+      },
+    });
+  } catch (error) {
+    console.error("Error checking authentication:", error);
+    return res.status(401).json({ error: "Unauthorized" });
   }
 };

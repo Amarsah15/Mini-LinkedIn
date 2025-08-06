@@ -1,5 +1,8 @@
 import express from "express";
-import { getUserProfile, updateProfile } from "../controllers/profile.controller.js";
+import {
+  getUserProfile,
+  updateProfile,
+} from "../controllers/profile.controller.js";
 import { auth } from "../middleware/auth.middleware.js";
 import { validateProfileUpdate } from "../middleware/validation.middleware.js";
 
