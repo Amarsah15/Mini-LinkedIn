@@ -49,7 +49,6 @@ export const useAuthStore = create((set) => ({
       console.log("Error logging in", error);
       toast.error("Error logging in");
       toast.error("Please allow cookies in your browser settings");
-      Navigate("http://localhost:5173/help");
     } finally {
       set({ isLoggingIn: false });
     }
