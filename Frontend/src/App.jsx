@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
@@ -21,6 +22,23 @@ import LoadingSpinner from "./components/common/LoadingSpinner";
 import Help from "./pages/Help";
 
 function App() {
+  const navigate = useNavigate();
+  // Utility function
+  function areCookiesEnabled() {
+    document.cookie = "testcookie=1";
+    const cookiesEnabled = document.cookie.indexOf("testcookie") !== -1;
+    return cookiesEnabled;
+  }
+
+  useEffect(() => {
+    if (!areCookiesEnabled()) {
+      alert(
+        "Cookies are disabled in your browser. Please enable cookies to continue."
+      );
+      navigate("/help");
+    }
+  }, []);
+
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
@@ -36,7 +54,16 @@ function App() {
   }
 
   return (
-    <Router>
+    <div>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: { background: "#363636", color: "#fff" },
+          success: { duration: 3000, theme: { primary: "#0077B5" } },
+        }}
+      />
+
       <Header />
 
       <Routes>
@@ -69,16 +96,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/help" element={<Help />} />
       </Routes>
-
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 4000,
-          style: { background: "#363636", color: "#fff" },
-          success: { duration: 3000, theme: { primary: "#0077B5" } },
-        }}
-      />
-    </Router>
+    </div>
   );
 }
 
