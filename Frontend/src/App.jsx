@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import Header from "./components/common/Header";
-import ProtectedRoute from "./components/common/ProtectedRoute";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -15,11 +19,13 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { useAuthStore } from "./store/authStore";
 
 function App() {
-  const { checkAuth, isCheckingAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  console.log("App component rendered", checkAuth);
 
   if (isCheckingAuth) {
     return (
@@ -35,33 +41,28 @@ function App() {
 
       <Routes>
         {/* Public routes */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/login"
+          element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/register"
+          element={!authUser ? <RegisterPage /> : <Navigate to={"/"} />}
+        />
 
         {/* Protected routes */}
         <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          }
+          path="/profile"
+          element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />}
         />
         <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
+          index
+          path="/"
+          element={authUser ? <HomePage /> : <Navigate to={"/login"} />}
         />
         <Route
           path="/posts"
-          element={
-            <ProtectedRoute>
-              <PostsPage />
-            </ProtectedRoute>
-          }
+          element={authUser ? <PostsPage /> : <Navigate to={"/login"} />}
         />
 
         {/* Fallback */}

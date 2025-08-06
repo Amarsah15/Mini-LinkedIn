@@ -67,7 +67,6 @@ const ProfilePage = () => {
             </button>
           </div>
         )}
-
         {/* ---------------- USER POSTS ---------------- */}
         <h2 className="text-xl font-semibold mt-8 mb-4">My Posts</h2>
         {userPosts.length === 0 ? (
@@ -77,6 +76,7 @@ const ProfilePage = () => {
             <PostCard
               key={post._id}
               post={post}
+              profile={displayProfile}
               onPostDeleted={removeUserPost}
             />
           ))

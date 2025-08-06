@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { usePostsStore } from "../../store/postsStore";
 import { useAuthStore } from "../../store/authStore";
 
-const PostCard = ({ post, onPostDeleted }) => {
+const PostCard = ({ post, onPostDeleted, profile }) => {
   const navigate = useNavigate();
   const { authUser } = useAuthStore();
   const { deletePost } = usePostsStore();
@@ -58,10 +58,10 @@ const PostCard = ({ post, onPostDeleted }) => {
           {/* Profile Picture (Clickable) */}
           <img
             src={
-              post.author.profilePicture ||
+              profile.profilePicture ||
               `https://api.dicebear.com/5.x/initials/svg?seed=${post.author.name}`
             }
-            alt={post.author.name}
+            alt={profile.name}
             className="w-12 h-12 rounded-full cursor-pointer"
             onClick={() => handleNameClick(post.author._id)}
           />
@@ -73,7 +73,7 @@ const PostCard = ({ post, onPostDeleted }) => {
                 className="font-semibold text-gray-900 cursor-pointer hover:underline"
                 onClick={() => handleNameClick(post.author._id)}
               >
-                {post.author.name}
+                {profile.name}
               </h3>
               <span className="text-gray-500 text-sm">•</span>
               <span className="text-gray-500 text-sm">
