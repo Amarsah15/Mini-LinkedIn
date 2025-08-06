@@ -2,6 +2,38 @@
 
 A full-stack social media application built with React, Node.js, Express, and MongoDB that mimics core LinkedIn functionality.
 
+## 🌐 Live Demo
+
+| App             | URL                                            |
+| --------------- | ---------------------------------------------- |
+| Front-end       | **https://mini-linked-in-umber.vercel.app**    |
+| Back-end health | https://mini-linkedin-j86g.onrender.com/health |
+
+> Use the demo credentials below or register a new account.
+
+### Demo Accounts
+
+| Email                  | Password     |
+| ---------------------- | ------------ |
+| `gsah150803@gmail.com` | `Amar@12345` |
+| `amar@gmail.com`       | `123456`     |
+
+---
+
+## 📸 Screenshots
+
+| Page          | Preview                                        |
+| ------------- | ---------------------------------------------- |
+| **Home Feed** | ![Home feed](./Frontend/public/home.png)       |
+| **Login**     | ![Login page](./Frontend/public/login.png)     |
+| **SignUp**    | ![SignUp page](./Frontend/public/register.png) |
+| **Profile**   | ![Profile page](./Frontend/public/profile.png) |
+| **Posts**     | ![Posts page](./Frontend/public/profile.png)   |
+
+_(All screenshots taken on desktop — the layout is fully responsive on tablet and mobile as well.)_
+
+---
+
 ## 🚀 Features
 
 ### User Authentication
