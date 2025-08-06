@@ -20,8 +20,8 @@ app.use(generalLimiter);
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
       "https://mini-linked-in-umber.vercel.app",
+      "http://localhost:5173",
     ],
     credentials: true,
   })

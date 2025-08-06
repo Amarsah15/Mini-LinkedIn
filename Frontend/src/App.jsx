@@ -17,6 +17,8 @@ import PostsPage from "./pages/PostsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 import { useAuthStore } from "./store/authStore";
+import LoadingSpinner from "./components/common/LoadingSpinner";
+import Help from "./pages/Help";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -25,12 +27,10 @@ function App() {
     checkAuth();
   }, [checkAuth]);
 
-  console.log("App component rendered", checkAuth);
-
   if (isCheckingAuth) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Checking authentication...
+        <LoadingSpinner size="lg" />
       </div>
     );
   }
@@ -67,6 +67,7 @@ function App() {
 
         {/* Fallback */}
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/help" element={<Help />} />
       </Routes>
 
       <Toaster
