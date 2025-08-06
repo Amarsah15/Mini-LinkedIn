@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { axiosInstance } from "../utils/api";
 import toast from "react-hot-toast";
+import { Navigate } from "react-router-dom";
 
 export const useAuthStore = create((set) => ({
   authUser: null,
@@ -47,6 +48,8 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       console.log("Error logging in", error);
       toast.error("Error logging in");
+      toast.error("Please allow cookies in your browser settings");
+      Navigate("http://localhost:5173/help");
     } finally {
       set({ isLoggingIn: false });
     }
