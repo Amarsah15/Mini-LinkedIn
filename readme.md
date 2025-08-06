@@ -425,15 +425,11 @@ The application is fully responsive and works on:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
 ## 👨💻 Author
 
 **Amarnath Kumar**
 
-- GitHub: [@yourusername](https://github.com/Amarsah15)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/amarnath15)
+- GitHub: [@Amarnath Kuamr GitHub](https://github.com/Amarsah15)
+- LinkedIn: [Amarnath Kumar LinkedIn](https://linkedin.com/in/amarnath15)
 
 **Happy Coding! 🚀**
