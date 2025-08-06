@@ -15,7 +15,7 @@ connectDB();
 
 dotenv.config();
 
-app.use(generalLimiter);
+// app.use(generalLimiter);
 
 app.use(
   cors({
