@@ -19,7 +19,10 @@ app.use(generalLimiter);
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://mini-linked-in-umber.vercel.app",
+    ],
     credentials: true,
   })
 );
@@ -54,9 +57,12 @@ app.listen(PORT, () => {
 const keepAlive = () => {
   setInterval(async () => {
     try {
-      const res = await axios.get("http://localhost:8000/health", {
-        timeout: 4000,
-      });
+      const res = await axios.get(
+        "https://mini-linkedin-2lxq.onrender.com/health",
+        {
+          timeout: 4000,
+        }
+      );
       console.log("✅ Ping successful:", res.status);
     } catch (error) {
       console.warn("⚠️ Ping failed:", error);
