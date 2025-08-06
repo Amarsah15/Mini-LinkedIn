@@ -7,15 +7,12 @@ import authRoutes from "./src/routes/auth.routes.js";
 import postRoutes from "./src/routes/posts.routes.js";
 import profileRoutes from "./src/routes/profile.routes.js";
 import { connectDB } from "./src/config/db.js";
-import { generalLimiter } from "./src/middleware/rateLimiter.middleware.js";
 
 const app = express();
 
 connectDB();
 
 dotenv.config();
-
-// app.use(generalLimiter);
 
 app.use(
   cors({
