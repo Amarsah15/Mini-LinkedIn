@@ -58,7 +58,7 @@ const keepAlive = () => {
   setInterval(async () => {
     try {
       const res = await axios.get(
-        "https://mini-linkedin-2lxq.onrender.com/health",
+        "https://mini-linkedin-j86g.onrender.com/health",
         {
           timeout: 4000,
         }
