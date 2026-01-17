@@ -72,7 +72,7 @@ export const getPublicProfile = async (req, res) => {
     const { userId } = req.params;
 
     const profile = await User.findById(userId).select(
-      "name bio profilePicture createdAt"
+      "name bio profilePicture createdAt followers"
     );
 
     if (!profile) {

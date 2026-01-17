@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./src/routes/auth.routes.js";
 import postRoutes from "./src/routes/posts.routes.js";
 import profileRoutes from "./src/routes/profile.routes.js";
+import userRoutes from "./src/routes/user.routes.js";
 import { connectDB } from "./src/config/db.js";
 
 const app = express();
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/posts", postRoutes);
 app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/users", userRoutes);
 
 const PORT = process.env.PORT || 8000;
 
@@ -45,19 +47,22 @@ app.listen(PORT, () => {
 });
 
 const keepAlive = () => {
-  setInterval(async () => {
-    try {
-      const res = await axios.get(
-        "https://mini-linkedin-j86g.onrender.com/health",
-        {
-          timeout: 4000,
-        }
-      );
-      console.log("✅ Ping successful:", res.status);
-    } catch (error) {
-      console.warn("⚠️ Ping failed:", error);
-    }
-  }, 1000 * 60 * 10); // every 10 minutes
+  setInterval(
+    async () => {
+      try {
+        const res = await axios.get(
+          "https://mini-linkedin-j86g.onrender.com/health",
+          {
+            timeout: 4000,
+          }
+        );
+        console.log("✅ Ping successful:", res.status);
+      } catch (error) {
+        console.warn("⚠️ Ping failed:", error);
+      }
+    },
+    1000 * 60 * 10
+  ); // every 10 minutes
 };
 
 keepAlive();

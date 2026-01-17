@@ -7,6 +7,8 @@ export const useProfileStore = create((set) => ({
   userPosts: [],
   isFetchingProfile: false,
   isUpdatingProfile: false,
+  isFollowing: false,
+  followersCount: 0,
 
   getUserProfile: async () => {
     set({ isFetchingProfile: true });
@@ -74,11 +76,25 @@ export const useProfileStore = create((set) => ({
       set({
         profile: res.data.profile,
         userPosts: res.data.posts || [],
+        followersCount: res.data.profile.followers?.length || 0,
       });
     } catch (error) {
       toast.error("Failed to load profile");
     } finally {
       set({ isFetchingProfile: false });
     }
+  },
+
+  checkFollowStatus: async (userId) => {
+    const res = await axiosInstance.get(`/users/${userId}/follow-status`);
+    set({ isFollowing: res.data.following });
+  },
+
+  toggleFollow: async (userId) => {
+    const res = await axiosInstance.post(`/users/${userId}/follow`);
+    set({
+      isFollowing: res.data.following,
+      followersCount: res.data.followersCount,
+    });
   },
 }));
