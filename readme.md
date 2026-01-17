@@ -4,9 +4,9 @@ A full-stack social networking application built with the MERN stack, enabling u
 
 ## 🌐 Live Demo
 
-| App       | URL                                         |
-| --------- | ------------------------------------------- |
-| Front-end | **https://mini-linked-in-umber.vercel.app** |
+| App       | URL                                               |
+| --------- | ------------------------------------------------- |
+| Front-end | **https://connectify-amarnath-kumar.vercel.app/** |
 
 ---
 

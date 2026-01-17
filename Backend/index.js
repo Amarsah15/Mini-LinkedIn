@@ -18,11 +18,11 @@ dotenv.config();
 app.use(
   cors({
     origin: [
-      "https://mini-linked-in-umber.vercel.app",
+      "https://connectify-amarnath-kumar.vercel.app/",
       "http://localhost:5173",
     ],
     credentials: true,
-  })
+  }),
 );
 app.use(cookieParser());
 app.use(express.json());
