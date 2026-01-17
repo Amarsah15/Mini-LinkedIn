@@ -26,7 +26,6 @@ export const useProfileStore = create((set) => ({
     }
   },
 
-
   updateProfile: async (data) => {
     set({ isUpdatingProfile: true });
     try {
@@ -66,5 +65,20 @@ export const useProfileStore = create((set) => ({
     set((state) => ({
       userPosts: state.userPosts.filter((post) => post._id !== postId),
     }));
+  },
+
+  getPublicProfile: async (userId) => {
+    set({ isFetchingProfile: true });
+    try {
+      const res = await axiosInstance.get(`/profile/${userId}`);
+      set({
+        profile: res.data.profile,
+        userPosts: res.data.posts || [],
+      });
+    } catch (error) {
+      toast.error("Failed to load profile");
+    } finally {
+      set({ isFetchingProfile: false });
+    }
   },
 }));

@@ -64,6 +64,10 @@ function App() {
           element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />}
         />
         <Route
+          path="/profile/:userId"
+          element={authUser ? <PublicProfilePage /> : <Navigate to="/login" />}
+        />
+        <Route
           index
           path="/"
           element={authUser ? <HomePage /> : <Navigate to={"/login"} />}

@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const getUserProfile = async (req, res) => {
   try {
-    const userId = req.user.id; // ✅ FIXED
+    const userId = req.user._id;
     const profile = await User.findById(userId).select("-password");
     const posts = await Post.find({ author: userId })
       .populate("author", "name profilePicture")
@@ -34,7 +34,7 @@ export const getUserProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user._id;
     const { name, bio } = req.body;
 
     const updateData = {};
@@ -63,6 +63,39 @@ export const updateProfile = async (req, res) => {
       success: false,
       message: "Failed to update profile",
       error: err.message,
+    });
+  }
+};
+
+export const getPublicProfile = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const profile = await User.findById(userId).select(
+      "name bio profilePicture createdAt"
+    );
+
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const posts = await Post.find({ author: userId })
+      .populate("author", "name profilePicture")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      profile,
+      posts,
+    });
+  } catch (error) {
+    console.error("Public profile error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch public profile",
     });
   }
 };

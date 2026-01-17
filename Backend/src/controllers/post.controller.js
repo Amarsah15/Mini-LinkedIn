@@ -3,7 +3,11 @@ import Post from "../models/Post.js";
 export const createPost = async (req, res) => {
   try {
     const { content } = req.body;
-    const userId = req.user.id;
+    const userId = req.user._id;
+
+    if (!content) {
+      return res.status(400).json({ message: "Content required" });
+    }
 
     const newPost = new Post({
       content,
@@ -45,7 +49,7 @@ export const getAllPosts = async (req, res) => {
 export const deletePost = async (req, res) => {
   try {
     const postId = req.params.id;
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     const post = await Post.findById(postId);
     if (!post) {

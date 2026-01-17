@@ -34,10 +34,13 @@ export const register = async (req, res) => {
 
     await user.save();
 
+    const safeUser = user.toObject();
+    delete safeUser.password;
+
     // Generate JWT token
     const token = jwt.sign(
       {
-        id: user._id,
+        _id: user._id,
         email: user.email,
         name: user.name,
         bio: user.bio || "",
@@ -45,22 +48,22 @@ export const register = async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1d",
+        expiresIn: "7d",
       }
     );
 
     // Set token in response header
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // true on prod
-      sameSite: "None", // or 'None' with secure true for cross-site
+      secure: process.env.NODE_ENV === "production", // true on prod
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // 'None' with secure true for cross-site
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     res.status(201).json({
       success: true,
       message: "User registered successfully",
-      user,
+      user: safeUser,
     });
   } catch (error) {
     console.error(error);
@@ -94,10 +97,13 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
 
+    safeUser = user.toObject();
+    delete safeUser.password;
+
     // Generate JWT token
     const token = jwt.sign(
       {
-        id: user._id,
+        _id: user._id,
         email: user.email,
         name: user.name,
         bio: user.bio || "",
@@ -105,22 +111,22 @@ export const login = async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1d",
+        expiresIn: "7d",
       }
     );
 
     // Set token in response header
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // true on prod
-      sameSite: "None", // or 'None' with secure true for cross-site
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
       success: true,
       message: "User logged in successfully",
-      user,
+      user: safeUser,
     });
   } catch (error) {
     console.error(error);
@@ -136,10 +142,11 @@ export const logout = (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: true,
-      sameSite: "None", // or 'None' with secure true for cross-site
-      path: "/", // Make sure path matches
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      path: "/",
     });
+
     res
       .status(200)
       .json({ success: true, message: "User logged out successfully" });
@@ -159,7 +166,7 @@ export const check = async (req, res) => {
       success: true,
       message: "User is authenticated",
       user: {
-        id: req.user.id,
+        _id: req.user._id,
         name: req.user.name,
         email: req.user.email,
         profilePicture: req.user.profilePicture,

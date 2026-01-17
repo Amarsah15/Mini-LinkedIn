@@ -10,14 +10,6 @@ const PostFeed = ({ refreshTrigger }) => {
     getAllPosts();
   }, [refreshTrigger, getAllPosts]);
 
-  const handlePostDeleted = async (postId) => {
-    try {
-      await deletePost(postId);
-    } catch (error) {
-      console.log("Failed to delete post:", error);
-    }
-  };
-
   if (isFetchingPosts) {
     return (
       <div className="flex justify-center items-center py-8">
@@ -57,11 +49,7 @@ const PostFeed = ({ refreshTrigger }) => {
   return (
     <div className="space-y-4">
       {posts.map((post) => (
-        <PostCard
-          key={post._id}
-          post={post}
-          onPostDeleted={handlePostDeleted}
-        />
+        <PostCard key={post._id} post={post} />
       ))}
     </div>
   );

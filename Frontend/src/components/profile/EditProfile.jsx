@@ -6,15 +6,9 @@ import { useProfileStore } from "../../store/profileStore";
 import { updateProfileSchema } from "../../schemas/profileSchemas";
 import LoadingSpinner from "../common/LoadingSpinner";
 
-const EditProfile = ({ onProfileUpdated, onCancel }) => {
-
+const EditProfile = ({ profile, onProfileUpdated, onCancel }) => {
   const { authUser } = useAuthStore();
-  const {
-    profile,
-    updateProfile,
-    isUpdatingProfile,
-  } = useProfileStore();
-
+  const { profile, updateProfile, isUpdatingProfile } = useProfileStore();
 
   const initial = profile || authUser;
 
@@ -35,7 +29,7 @@ const EditProfile = ({ onProfileUpdated, onCancel }) => {
 
   const onSubmit = async (data) => {
     try {
-      const updatedUser = await updateProfile(data); 
+      const updatedUser = await updateProfile(data);
       if (onProfileUpdated) onProfileUpdated(updatedUser);
     } catch (err) {
       console.error("Profile update failed:", err);

@@ -63,16 +63,16 @@ export const usePostsStore = create((set, get) => ({
     }
   },
 
-  getPostsByUserId: async (userId) => {
-    try {
-      const res = await axiosInstance.get(`/posts/${userId}`);
-      return res.data.posts;
-    } catch (error) {
-      console.log("Error fetching user posts", error);
-      toast.error(error.response?.data?.message || "Error fetching user posts");
-      throw error;
-    }
-  },
+  // getPostsByUserId: async (userId) => {
+  //   try {
+  //     const res = await axiosInstance.get(`/posts/${userId}`);
+  //     return res.data.posts;
+  //   } catch (error) {
+  //     console.log("Error fetching user posts", error);
+  //     toast.error(error.response?.data?.message || "Error fetching user posts");
+  //     throw error;
+  //   }
+  // },
 
   // Utility function to clear posts (useful for logout)
   clearPosts: () => {

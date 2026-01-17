@@ -40,13 +40,6 @@ app.get("/health", (req, res) => {
   res.status(200).json({ success: true, message: "Server is healthy" });
 });
 
-// app.all("*", (req, res) => {
-//   res.status(404).json({
-//     success: false,
-//     message: "Route not found, Error 404",
-//   });
-// });
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
