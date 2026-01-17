@@ -8,9 +8,13 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 const EditProfile = ({ profile, onProfileUpdated, onCancel }) => {
   const { authUser } = useAuthStore();
-  const { profile, updateProfile, isUpdatingProfile } = useProfileStore();
+  const {
+    profile: storeProfile,
+    updateProfile,
+    isUpdatingProfile,
+  } = useProfileStore();
 
-  const initial = profile || authUser;
+  const initial = profile || storeProfile || authUser;
 
   const {
     register,
@@ -76,7 +80,6 @@ const EditProfile = ({ profile, onProfileUpdated, onCancel }) => {
           </div>
         </div>
 
-        {/* ------------------------ Actions ------------------------- */}
         <div className="flex space-x-3">
           <button
             type="submit"
@@ -85,6 +88,7 @@ const EditProfile = ({ profile, onProfileUpdated, onCancel }) => {
           >
             {isUpdatingProfile ? <LoadingSpinner size="sm" /> : "Save Changes"}
           </button>
+
           <button type="button" onClick={onCancel} className="btn-secondary">
             Cancel
           </button>

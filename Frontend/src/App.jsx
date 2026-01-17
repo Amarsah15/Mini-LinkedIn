@@ -1,26 +1,24 @@
 import React, { useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import Header from "./components/common/Header";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProfilePage from "./pages/ProfilePage";
 import PostsPage from "./pages/PostsPage";
+import PublicProfilePage from "./pages/PublicProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 import { useAuthStore } from "./store/authStore";
 import LoadingSpinner from "./components/common/LoadingSpinner";
 
 function App() {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { checkAuth, isCheckingAuth } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
@@ -36,48 +34,61 @@ function App() {
 
   return (
     <div>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          duration: 4000,
-          style: { background: "#363636", color: "#fff" },
-          success: { duration: 3000, theme: { primary: "#0077B5" } },
-        }}
-      />
+      <Toaster position="top-right" />
 
       <Header />
 
       <Routes>
-        {/* Public routes */}
+        {/* ---------- PUBLIC ROUTES ---------- */}
         <Route
           path="/login"
-          element={!authUser ? <LoginPage /> : <Navigate to={"/"} />}
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
         />
+
         <Route
           path="/register"
-          element={!authUser ? <RegisterPage /> : <Navigate to={"/"} />}
+          element={
+            <PublicRoute>
+              <RegisterPage />
+            </PublicRoute>
+          }
         />
 
-        {/* Protected routes */}
+        <Route path="/profile/:userId" element={<PublicProfilePage />} />
+
+        {/* ---------- PROTECTED ROUTES ---------- */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/profile"
-          element={authUser ? <ProfilePage /> : <Navigate to={"/login"} />}
-        />
-        <Route
-          path="/profile/:userId"
-          element={authUser ? <PublicProfilePage /> : <Navigate to="/login" />}
-        />
-        <Route
-          index
-          path="/"
-          element={authUser ? <HomePage /> : <Navigate to={"/login"} />}
-        />
-        <Route
-          path="/posts"
-          element={authUser ? <PostsPage /> : <Navigate to={"/login"} />}
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
         />
 
-        {/* Fallback */}
+        <Route
+          path="/posts"
+          element={
+            <ProtectedRoute>
+              <PostsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ---------- 404 ---------- */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

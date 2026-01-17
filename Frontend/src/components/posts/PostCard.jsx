@@ -9,18 +9,14 @@ const PostCard = ({ post, onPostDeleted }) => {
   const { authUser } = useAuthStore();
   const { deletePost } = usePostsStore();
 
-  const isOwner = authUser && post.author._id === authUser._id;
+  const isOwner = authUser?._id === post?.author?._id;
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this post?")) {
-      return;
-    }
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
 
     try {
       await deletePost(post._id);
-      if (onPostDeleted) {
-        onPostDeleted(post._id);
-      }
+      if (onPostDeleted) onPostDeleted(post._id);
     } catch (error) {
       console.log("Failed to delete post:", error);
     }
@@ -29,23 +25,20 @@ const PostCard = ({ post, onPostDeleted }) => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const now = new Date();
-    const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
+    const diffInMinutes = Math.floor((now - date) / (1000 * 60));
 
-    if (diffInHours < 1) {
-      const diffInMinutes = Math.floor((now - date) / (1000 * 60));
-      return `${diffInMinutes}m ago`;
-    } else if (diffInHours < 24) {
-      return `${diffInHours}h ago`;
-    } else {
-      const diffInDays = Math.floor(diffInHours / 24);
-      return `${diffInDays}d ago`;
-    }
+    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+    if (diffInMinutes < 1440) return `${Math.floor(diffInMinutes / 60)}h ago`;
+    return `${Math.floor(diffInMinutes / 1440)}d ago`;
   };
 
-  const handleNameClick = (clickedUserId) => {
-    if (!authUser) return;
-    if (authUser.id === clickedUserId) {
+  const handleProfileNavigation = (clickedUserId) => {
+    if (!clickedUserId) return;
+
+    if (authUser?._id === clickedUserId) {
       navigate("/profile");
+    } else {
+      navigate(`/profile/${clickedUserId}`);
     }
   };
 
@@ -53,15 +46,15 @@ const PostCard = ({ post, onPostDeleted }) => {
     <div className="card p-6 mb-4">
       <div className="flex items-start justify-between">
         <div className="flex items-start space-x-3">
-          {/* Profile Picture (Clickable) */}
+          {/* Profile Picture */}
           <img
             src={
-              post.author.profilePicture ||
-              `https://api.dicebear.com/5.x/initials/svg?seed=${post.author.name}`
+              post?.author?.profilePicture ||
+              `https://api.dicebear.com/5.x/initials/svg?seed=${post?.author?.name}`
             }
-            alt={post.author.name}
+            alt={post?.author?.name}
             className="w-12 h-12 rounded-full cursor-pointer"
-            onClick={() => handleNameClick(post.author._id)}
+            onClick={() => handleProfileNavigation(post?.author?._id)}
           />
 
           {/* Name + Timestamp */}
@@ -69,19 +62,19 @@ const PostCard = ({ post, onPostDeleted }) => {
             <div className="flex items-center space-x-2">
               <h3
                 className="font-semibold text-gray-900 cursor-pointer hover:underline"
-                onClick={() => handleNameClick(post.author._id)}
+                onClick={() => handleProfileNavigation(post?.author?._id)}
               >
-                {post.author.name}
+                {post?.author?.name}
               </h3>
               <span className="text-gray-500 text-sm">•</span>
               <span className="text-gray-500 text-sm">
-                {formatDate(post.createdAt)}
+                {formatDate(post?.createdAt)}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Delete (If Owner) */}
+        {/* Delete Button */}
         {isOwner && (
           <button
             onClick={handleDelete}
@@ -95,7 +88,7 @@ const PostCard = ({ post, onPostDeleted }) => {
 
       {/* Post Content */}
       <div className="mt-4">
-        <p className="text-gray-800 whitespace-pre-wrap">{post.content}</p>
+        <p className="text-gray-800 whitespace-pre-wrap">{post?.content}</p>
       </div>
     </div>
   );

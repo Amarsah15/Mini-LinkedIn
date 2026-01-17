@@ -1,4 +1,5 @@
-# Mini LinkedIn
+<img src="/Frontend/public/logo.svg" width="220" />
+# Connectify
 
 A full-stack social media application built with React, Node.js, Express, and MongoDB that mimics core LinkedIn functionality.
 

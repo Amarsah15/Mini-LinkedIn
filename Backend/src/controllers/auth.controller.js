@@ -97,7 +97,7 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
 
-    safeUser = user.toObject();
+    const safeUser = user.toObject();
     delete safeUser.password;
 
     // Generate JWT token

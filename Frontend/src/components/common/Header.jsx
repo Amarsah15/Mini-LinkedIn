@@ -3,13 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import { usePostsStore } from "../../store/postsStore";
 import { useProfileStore } from "../../store/profileStore";
-import {
-  LogOut,
-  Home,
-  FileText,
-  Menu,
-  X,
-} from "lucide-react";
+import { LogOut, Home, FileText, Menu, X } from "lucide-react";
+import Logo from "../../assets/logo.svg";
 
 const Header = () => {
   const { authUser, logout } = useAuthStore();
@@ -39,12 +34,7 @@ const Header = () => {
         <div className="flex justify-between items-center h-16 relative">
           {/* Logo - Left */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-linkedin-blue rounded flex items-center justify-center">
-              <span className="text-white font-bold text-sm">ML</span>
-            </div>
-            <span className="text-xl font-bold text-gray-900">
-              Mini LinkedIn
-            </span>
+            <img src={Logo} alt="Connectify Logo" />
           </Link>
 
           {/* Mobile Menu Toggle Button */}

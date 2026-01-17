@@ -1,0 +1,30 @@
+<svg
+  width="220"
+  height="60"
+  viewBox="0 0 220 60"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Icon -->
+  <g transform="translate(0, 6)">
+    <circle cx="18" cy="18" r="16" stroke="#0077B5" stroke-width="3" />
+    <circle cx="18" cy="18" r="4" fill="#0077B5" />
+    <circle cx="6" cy="18" r="3" fill="#0077B5" />
+    <circle cx="30" cy="18" r="3" fill="#0077B5" />
+    <circle cx="18" cy="6" r="3" fill="#0077B5" />
+    <circle cx="18" cy="30" r="3" fill="#0077B5" />
+  </g>
+
+  <!-- Text -->
+  <text
+    x="50"
+    y="38"
+    fill="#1F2937"
+    font-size="28"
+    font-weight="700"
+    font-family="Inter, system-ui, -apple-system, sans-serif"
+    letter-spacing="0.5"
+  >
+    Connectify
+  </text>
+</svg>

@@ -46,33 +46,31 @@ export const usePostsStore = create((set, get) => ({
   deletePost: async (postId) => {
     set({ isDeletingPost: true });
     try {
-      const res = await axiosInstance.delete(`/posts/${postId}`);
+      await axiosInstance.delete(`/posts/${postId}`);
 
-      // Remove the deleted post from the posts array
-      const currentPosts = get().posts;
-      const updatedPosts = currentPosts.filter((post) => post._id !== postId);
-      set({ posts: updatedPosts });
+      // ✅ refetch fresh posts from DB
+      const res = await axiosInstance.get("/posts/getAll");
+      set({ posts: res.data.posts });
 
-      toast.success(res.data.message);
+      toast.success("Post deleted successfully");
     } catch (error) {
+      toast.error("Failed to delete post");
       console.log("Error deleting post", error);
-      toast.error(error.response?.data?.message || "Error deleting post");
-      throw error;
     } finally {
       set({ isDeletingPost: false });
     }
   },
 
-  // getPostsByUserId: async (userId) => {
-  //   try {
-  //     const res = await axiosInstance.get(`/posts/${userId}`);
-  //     return res.data.posts;
-  //   } catch (error) {
-  //     console.log("Error fetching user posts", error);
-  //     toast.error(error.response?.data?.message || "Error fetching user posts");
-  //     throw error;
-  //   }
-  // },
+  getPostsByUserId: async (userId) => {
+    try {
+      const res = await axiosInstance.get(`/posts/${userId}`);
+      return res.data.posts;
+    } catch (error) {
+      console.log("Error fetching user posts", error);
+      toast.error(error.response?.data?.message || "Error fetching user posts");
+      throw error;
+    }
+  },
 
   // Utility function to clear posts (useful for logout)
   clearPosts: () => {

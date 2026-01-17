@@ -16,33 +16,33 @@ const ProfileCard = ({ profile, postsCount }) => {
         <div className="flex justify-center sm:justify-start mb-4 sm:mb-0">
           <img
             src={
-              profile.profilePicture ||
-              `https://api.dicebear.com/5.x/initials/svg?seed=${profile.name}`
+              profile?.profilePicture ||
+              `https://api.dicebear.com/5.x/initials/svg?seed=${profile?.name}`
             }
-            alt={profile.name}
+            alt={profile?.name}
             className="w-24 h-24 rounded-full border-4 border-white shadow-lg"
           />
         </div>
 
         <div className="flex-1 text-center sm:text-left">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            {profile.name}
+            {profile?.name}
           </h1>
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0 text-gray-600 mb-4">
             <div className="flex items-center justify-center sm:justify-start space-x-1">
               <Mail size={16} />
-              <span className="text-sm">{profile.email}</span>
+              <span className="text-sm">{profile?.email}</span>
             </div>
             <div className="flex items-center justify-center sm:justify-start space-x-1">
               <Calendar size={16} />
               <span className="text-sm">
-                Joined {formatDate(profile.createdAt)}
+                Joined {formatDate(profile?.createdAt)}
               </span>
             </div>
           </div>
 
-          {profile.bio && <p className="text-gray-700 mb-4">{profile.bio}</p>}
+          {profile?.bio && <p className="text-gray-700 mb-4">{profile?.bio}</p>}
 
           <div className="flex justify-center sm:justify-start space-x-6 text-sm">
             <div className="text-center">

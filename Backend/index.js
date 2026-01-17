@@ -45,24 +45,3 @@ app.get("/health", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
-const keepAlive = () => {
-  setInterval(
-    async () => {
-      try {
-        const res = await axios.get(
-          "https://mini-linkedin-j86g.onrender.com/health",
-          {
-            timeout: 4000,
-          }
-        );
-        console.log("✅ Ping successful:", res.status);
-      } catch (error) {
-        console.warn("⚠️ Ping failed:", error);
-      }
-    },
-    1000 * 60 * 10
-  ); // every 10 minutes
-};
-
-keepAlive();

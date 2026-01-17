@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthStore } from "../../store/authStore";
 import { registerSchema } from "../../schemas/authSchemas";
 import LoadingSpinner from "../common/LoadingSpinner";
+import Logo from "../../assets/logo.svg";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -32,11 +33,11 @@ const RegisterForm = () => {
       <div className="max-w-md w-full space-y-8">
         <div>
           <div className="flex justify-center">
-            <div className="w-12 h-12 bg-linkedin-blue rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">ML</span>
+            <div className="flex items-center justify-center">
+              <img src={Logo} alt="Connectify Logo" />
             </div>
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="text-center text-3xl font-extrabold text-gray-900">
             Create your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
